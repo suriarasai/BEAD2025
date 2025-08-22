@@ -5,16 +5,7 @@ This project provides a self-contained environment for running PySpark jobs with
 * Podman Desktop: You must have Podman Desktop installed and running on your system.
 * Project Structure: You need to create the following directory structure and place the files accordingly:
 
-.
-├── data/
-│   └── BEAD-Rebu_TripData.csv  <-- Place your CSV file here
-├── jars/
-│   ├── aws-java-sdk-bundle-1.12.262.jar
-│   └── hadoop-aws-3.3.4.jar
-├── notebooks/
-│   └── pyspark_minio_eda.ipynb <-- The Jupyter notebook
-├── podman-compose.yml
-└── Dockerfile
+
 
 Important: You will need to download the two .jar files and place them in the jars directory:
 
