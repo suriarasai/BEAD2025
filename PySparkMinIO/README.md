@@ -6,15 +6,25 @@ This project provides a self-contained environment for running PySpark jobs with
 * Project Structure: You need to create the following directory structure and place the files accordingly:
 
 .
+
 ├── data/
+
 │   └── BEAD-Rebu_TripData.csv      # Place your CSV input data here
+
 ├── jars/
+
 │   ├── aws-java-sdk-bundle-1.12.262.jar
+
 │   └── hadoop-aws-3.3.4.jar        # Required JARs for S3/MinIO integration
+
 ├── notebooks/
+
 │   └── pyspark_minio_eda.ipynb     # Jupyter notebook for analysis
+
 ├── podman-compose.yml              # Compose file to orchestrate services
+
 └── Dockerfile                      # Custom Spark image build
+
 
 
 Important: You will need to download the two .jar files and place them in the jars directory:
