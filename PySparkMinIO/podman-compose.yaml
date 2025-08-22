@@ -1,30 +1,42 @@
-version: '3.8'
-
+# This file defines the services, networks, and volumes for our PySpark and MinIO environment.
 services:
+  # JupyterLab service with PySpark
+  spark:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: pyspark_jupyter
+    ports:
+      - "8888:8888" # Jupyter Notebook port
+      - "4040:4040" # Spark UI port
+    volumes:
+      - ./data:/home/jovyan/data # Mount local data directory
+      - ./notebooks:/home/jovyan/work # Mount notebooks directory
+    environment:
+      - JUPYTER_ENABLE_LAB=yes
+      - SPARK_MASTER_URL=local[*]
+    networks:
+      - spark-minio-net
+
+  # MinIO S3-compatible object storage service
   minio:
-    image: quay.io/minio/minio
-    command: server /data --console-address ":9001"
+    image: docker.io/minio/minio:latest # Using fully qualified name
+    container_name: minio_server
+    ports:
+      - "9000:9000"  # MinIO API port
+      - "9001:9001"  # MinIO Console port
     environment:
       - MINIO_ROOT_USER=minioadmin
       - MINIO_ROOT_PASSWORD=minioadmin
-    ports:
-      - "9000:9000"
-      - "9001:9001"
+    command: server /data --console-address ":9001"
     volumes:
-      - minio-data:/data
-
-  pyspark:
-    image: bitnami/spark:latest
-    environment:
-      - SPARK_MASTER=spark://spark-master:7077
-      - SPARK_WORKER_CORES=1
-      - SPARK_WORKER_MEMORY=512m
-      - SPARK_LOCAL_DIR=/tmp/spark-temp
-    volumes:
-      - ./workspace:/workspace
-    depends_on:
-      - minio
-    entrypoint: ["/bin/bash", "-c", "while true; do sleep 1000; done"]
+      - minio_data:/data
+    networks:
+      - spark-minio-net
 
 volumes:
-  minio-data:
+  minio_data:
+
+networks:
+  spark-minio-net:
+    driver: bridge
