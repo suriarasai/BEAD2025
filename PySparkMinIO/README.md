@@ -1,7 +1,7 @@
 # PySpark, MinIO, and Jupyter on Podman Desktop
 This project provides a self-contained environment for running PySpark jobs with MinIO as an S3-compatible object store, all managed through Podman Desktop.
 
-##Prerequisites
+## Prerequisites
 * Podman Desktop: You must have Podman Desktop installed and running on your system.
 * Project Structure: You need to create the following directory structure and place the files accordingly:
 
@@ -22,7 +22,7 @@ aws-java-sdk-bundle-1.12.262.jar
 
 hadoop-aws-3.3.4.jar
 
-##Step-by-Step Instructions
+## Step-by-Step Instructions
 1. Set Up Your Project Directory
 Create the folder structure as shown above and place all the provided files (docker-compose.yml, Dockerfile, pyspark_minio_eda.ipynb, and your BEAD-Rebu_TripData.csv) in their respective locations. Don't forget to download the required JAR files.
 
@@ -53,7 +53,7 @@ Once the containers are running:
    2. Double-click to open it.
    3. Run the cells of the notebook one by one by selecting a cell and pressing Shift + Enter.
 
-###What the Notebook Does:
+### What the Notebook Does:
    1. Initializes Spark: Sets up a SparkSession configured to communicate with the MinIO container.
    2. Creates a Bucket: Uses boto3 to create a new bucket named tripdata in MinIO (if it doesn't already exist).
    3. Reads Local CSV: Reads your BEAD-Rebu_TripData.csv file into a Spark DataFrame.
