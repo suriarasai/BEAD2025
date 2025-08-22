@@ -33,6 +33,14 @@ aws-java-sdk-bundle-1.12.262.jar
 
 hadoop-aws-3.3.4.jar
 
+## What the Notebook Does:
+   1. Initializes Spark: Sets up a SparkSession configured to communicate with the MinIO container.
+   2. Creates a Bucket: Uses boto3 to create a new bucket named tripdata in MinIO (if it doesn't already exist).
+   3. Reads Local CSV: Reads your BEAD-Rebu_TripData.csv file into a Spark DataFrame.
+   4. Writes to MinIO: Writes the DataFrame to the tripdata bucket in the efficient Parquet file format. You can verify this by checking the MinIO console.
+   5. Reads from MinIO: Reads the Parquet data from MinIO back into a new DataFrame to verify the write/read cycle.
+   6. Performs EDA: Runs a few simple queries on the data to demonstrate basic analysis, such as finding the average trip distance and the most popular pickup locations.
+      
 ## Step-by-Step Instructions
 1. Set Up Your Project Directory
 Create the folder structure as shown above and place all the provided files (docker-compose.yml, Dockerfile, pyspark_minio_eda.ipynb, and your BEAD-Rebu_TripData.csv) in their respective locations. Don't forget to download the required JAR files.
@@ -64,14 +72,6 @@ Once the containers are running:
    2. Double-click to open it.
    3. Run the cells of the notebook one by one by selecting a cell and pressing Shift + Enter.
 
-### What the Notebook Does:
-   1. Initializes Spark: Sets up a SparkSession configured to communicate with the MinIO container.
-   2. Creates a Bucket: Uses boto3 to create a new bucket named tripdata in MinIO (if it doesn't already exist).
-   3. Reads Local CSV: Reads your BEAD-Rebu_TripData.csv file into a Spark DataFrame.
-   4. Writes to MinIO: Writes the DataFrame to the tripdata bucket in the efficient Parquet file format. You can verify this by checking the MinIO console.
-   5. Reads from MinIO: Reads the Parquet data from MinIO back into a new DataFrame to verify the write/read cycle.
-   6. Performs EDA: Runs a few simple queries on the data to demonstrate basic analysis, such as finding the average trip distance and the most popular pickup locations.
-
 5. Shutting Down
    1.From your terminal (in the same project directory), run the following command to stop and remove the containers:
 ```bash
@@ -81,3 +81,4 @@ podman compose -f podman-compose.yaml down
 ```bash
 podman compose -f podman-compose.yaml down -v
 ```
+
